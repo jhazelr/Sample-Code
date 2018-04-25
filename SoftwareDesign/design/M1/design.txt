@@ -1,0 +1,109 @@
+@startuml
+class Application {
+  + {static} void main(String[] args)
+}
+
+class Database {
+  - List<SootClass> classes
+  - List<Dependency> dependencies
+  - Map<String, String> config
+  - Scene scene
+}
+
+Abstract Class Transformer {
+  - list<IFilter> filters
+  + Database transform(Database db)
+}
+
+class RecursiveTransformer extends Transformer {
+  -List<IFilter> filters
+  + RecursiveTransformer(List<IFilter> filters)
+  + Database transform(Database db)
+  - void computeAllSuperTypes(SootClass clazz, Collection<SootClass> allSuperTypes)
+}
+
+class PrivacyTransformer extends Transformer {
+  -List<IFilter> filters
+  + PrivacyTransformer(List<IFilter> filters)
+  + Database transform(Database db)
+}
+
+class RenderingTransformer extends Transformer {
+  -List<IFilter> filters
+  -Map<RELATIONSHIP, String> dependMap
+  + RenderingTransformer(List<IFilter> filter)
+  + Database transform(Database db)
+  - void render(Database db)
+  - void renderClassHeader(StringBuilder umlCode, SootClass clazz)
+  - void renderField(StringBuilder umlCode, SootField field)
+  - void renderMethod(StringBuilder umlCode, SootMethod method)
+  - void renderDependency(StringBuilder umlCode, Dependency dependency)
+  - List<SootClass> getFilteredClasses(Database db)
+  - List<SootField> getFilteredFields(SootClass clazz)
+  - List<SootMethod> getFilteredMethods(SootClass clazz)
+  - void saveCode(String umlCode)
+}
+
+class DependencyTransformer extends Transformer {
+   -List<IFilter> filter
+  + DependencyTransformer(List<IFilter> filter)
+  + Database transform(Database db)
+}
+
+class Preprocessor {
+  - Map<String, String> config
+  - Map<String, IFilter> filters
+  - Database db
+  + Preprocessor(String arg)
+  - void makeDB()
+  + void makeUML()
+  + void addFilter(String key, IFilter filter)
+  - List<Transformer> initializeTransformers()
+  - List<IFilter> initializeFilters()
+}
+
+interface IFilter {
+  + boolean shouldProcess(SootClass clazz)
+  + boolean shouldProcess(SootMethod method)
+  + boolean shouldProcess(SootField field)
+}
+class PublicFilter implements IFilter {
+  + boolean shouldProcess(SootClass clazz)
+  + boolean shouldProcess(SootMethod method)
+  + boolean shouldProcess(SootField field)
+}
+class PrivateFilter implements IFilter {
+  + boolean shouldProcess(SootClass clazz)
+  + boolean shouldProcess(SootMethod method)
+  + boolean shouldProcess(SootField field)
+}
+class ProtectedFilter implements IFilter {
+  + boolean shouldProcess(SootClass clazz)
+  + boolean shouldProcess(SootMethod method)
+  + boolean shouldProcess(SootField field)
+}
+
+class Dependency {
+  - SootClass from
+  - SootClass to
+  - enum type
+}
+
+class PlantUmlMaker implements Runnable {
+  - String dir
+  - {static} String codeString
+  - {static} Logger logger
+  + PlantUmlMaker(String dir)
+  + void run()
+}
+
+Application ..> Preprocessor
+DependencyTransformer ..> Dependency
+Preprocessor --> Transformer
+Preprocessor --> Database
+Preprocessor ..> IFilter
+Preprocessor ..> PlantUmlMaker
+Database --> Dependency
+Transformer --> Database
+Transformer-->IFilter
+@enduml

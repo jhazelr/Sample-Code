@@ -1,0 +1,265 @@
+@startuml
+skinparam linetype ortho
+class csse374.revengd.app.Application {
+
++ void <init>()
++ {static} void main(java.lang.String[])
+
+}
+
+abstract class csse374.revengd.app.Transformer {
+java.util.List<csse374.revengd.app.IFilter> filters
+
++ Transformer(java.util.List<csse374.revengd.app.IFilter>)
++ {abstract} csse374.revengd.app.Database transform(csse374.revengd.app.Database)
+
+}
+
+class csse374.revengd.app.RecursiveTransformer {
+java.util.List<csse374.revengd.app.IFilter> filters
+
++ RecursiveTransformer(java.util.List<csse374.revengd.app.IFilter>)
++ csse374.revengd.app.Database transform(csse374.revengd.app.Database)
+- void computeAllSuperTypes(soot.SootClass, java.util.Collection<soot.SootClass>)
+- void lambda$computeAllSuperTypes$0(java.util.Collection, soot.SootClass)
+
+}
+
+class csse374.revengd.app.PrivacyTransformer {
+java.util.List<csse374.revengd.app.IFilter> filters
+
++ PrivacyTransformer(java.util.List<csse374.revengd.app.IFilter>)
++ csse374.revengd.app.Database transform(csse374.revengd.app.Database)
+
+}
+
+class csse374.revengd.app.Preprocessor {
+- java.util.HashMap<java.lang.String,java.lang.String> config
+- java.util.HashMap<java.lang.String,csse374.revengd.app.IFilter> filters
+- csse374.revengd.app.Database db
+- soot.Scene scence
+
++ Preprocessor(java.util.HashMap<java.lang.String,java.lang.String>)
+- void makeDB()
+- void makeScene(java.lang.String, java.lang.String)
++ void makeUML()
++ void addFilter(java.lang.String, csse374.revengd.app.IFilter)
+- java.util.List<csse374.revengd.app.Transformer> initializeTransformers()
+- java.util.List<csse374.revengd.app.IFilter> initializeFilters()
+- java.util.List<soot.SootClass> getClasses(java.lang.String)
+
+}
+
+class csse374.revengd.app.Dependency$RELATIONSHIP {
++ {static} csse374.revengd.app.Dependency$RELATIONSHIP IMPLEMENTS
++ {static} csse374.revengd.app.Dependency$RELATIONSHIP EXTENDS
++ {static} csse374.revengd.app.Dependency$RELATIONSHIP DEPENDS
++ {static} csse374.revengd.app.Dependency$RELATIONSHIP ASSOCIATES
++ {static} csse374.revengd.app.Dependency$RELATIONSHIP DEPENDS_MANY
++ {static} csse374.revengd.app.Dependency$RELATIONSHIP ASSOCIATES_MANY
+- {static} csse374.revengd.app.Dependency$RELATIONSHIP[] $VALUES
+
++ {static} csse374.revengd.app.Dependency$RELATIONSHIP[] values()
++ {static} csse374.revengd.app.Dependency$RELATIONSHIP valueOf(java.lang.String)
+- Dependency$RELATIONSHIP()
+{static} void <clinit>()
+
+}
+
+class csse374.revengd.app.UMLRenderingTransformer {
+java.util.List<csse374.revengd.app.IFilter> filters
+java.util.Map<csse374.revengd.app.Dependency$RELATIONSHIP,java.lang.String> dependMap
+
++ UMLRenderingTransformer(java.util.List<csse374.revengd.app.IFilter>)
++ csse374.revengd.app.Database transform(csse374.revengd.app.Database)
+- void render(csse374.revengd.app.Database)
+- void renderClassHeader(java.lang.StringBuilder, soot.SootClass)
+- void renderField(java.lang.StringBuilder, soot.SootField)
+- void renderMethod(java.lang.StringBuilder, soot.SootMethod)
+- void renderDependency(java.lang.StringBuilder, csse374.revengd.app.Dependency)
+- java.util.List<soot.SootClass> getFilteredClasses(csse374.revengd.app.Database)
+- java.util.List<soot.SootField> getFilteredFields(soot.SootClass)
+- java.util.List<soot.SootMethod> getFilteredMethods(soot.SootClass)
+- void saveCode(java.lang.String)
+
+}
+
+interface csse374.revengd.app.IFilter {
+
++ boolean shouldProcessClass(soot.SootClass)
++ boolean shouldProcessField(soot.SootField)
++ boolean shouldProcessMethod(soot.SootMethod)
+
+}
+
+class csse374.revengd.app.ProtectedFilter {
+
++ void <init>()
++ boolean shouldProcessClass(soot.SootClass)
++ boolean shouldProcessField(soot.SootField)
++ boolean shouldProcessMethod(soot.SootMethod)
+
+}
+
+class csse374.revengd.app.PrivateFilter {
+
++ void <init>()
++ boolean shouldProcessClass(soot.SootClass)
++ boolean shouldProcessField(soot.SootField)
++ boolean shouldProcessMethod(soot.SootMethod)
+
+}
+
+class csse374.revengd.app.Dependency {
+- soot.SootClass from
+- soot.SootClass to
+- csse374.revengd.app.Dependency$RELATIONSHIP type
+
++ void <init>(soot.SootClass, soot.SootClass, csse374.revengd.app.Dependency$RELATIONSHIP)
++ soot.SootClass getFrom()
++ soot.SootClass getTo()
++ csse374.revengd.app.Dependency$RELATIONSHIP getType()
++ void setType(csse374.revengd.app.Dependency$RELATIONSHIP)
+
+}
+
+class csse374.revengd.app.Database {
+- java.util.List<soot.SootClass> classes
+- java.util.List<csse374.revengd.app.Dependency> dependencies
+- java.util.Map<java.lang.String,java.lang.String> config
+- soot.Scene scence
+
++ Database(java.util.List<soot.SootClass>, java.util.Map<java.lang.String,java.lang.String>, soot.Scene)
++ java.util.List<soot.SootClass> getClasses()
++ void setClasses(java.util.List<soot.SootClass>)
++ void addClass(soot.SootClass)
++ void addClasses(java.util.List<soot.SootClass>)
++ void removeClass(soot.SootClass)
++ soot.SootClass getClass(java.lang.String)
++ java.util.List<csse374.revengd.app.Dependency> getDependencies()
++ void setDependencies(java.util.List<csse374.revengd.app.Dependency>)
++ void addDependency(soot.SootClass, soot.SootClass, csse374.revengd.app.Dependency$RELATIONSHIP)
++ void removeDependency(csse374.revengd.app.Dependency)
++ java.util.Map<java.lang.String,java.lang.String> getConfig()
++ void setConfig(java.util.Map<java.lang.String,java.lang.String>)
++ void addConfig(java.lang.String, java.lang.String)
++ void removeConfig(java.lang.String)
++ void removeClasses(java.util.Set<soot.SootClass>)
++ soot.Scene getScence()
++ void updateDependency(soot.SootClass, soot.SootClass, boolean, boolean)
+
+}
+
+class csse374.revengd.app.SDRenderingTransformer {
+
++ SDRenderingTransformer(java.util.List<csse374.revengd.app.IFilter>)
++ csse374.revengd.app.Database transform(csse374.revengd.app.Database)
+- java.lang.StringBuilder render(soot.Scene, soot.SootMethod, int, boolean)
+- soot.SootMethod performContextSensitivePointerAnalysis(soot.Scene, soot.Unit, soot.SootMethod)
+- void saveCode(java.lang.String)
+- soot.SootMethod getMethod(java.lang.String, soot.Scene)
+- {static} void lambda$performContextSensitivePointerAnalysis$1(java.util.List, soot.jimple.toolkits.callgraph.Edge)
+- void lambda$render$0(boolean, soot.Scene, soot.SootMethod, java.lang.StringBuilder, int, soot.Unit)
+
+}
+
+class csse374.revengd.app.SuperDependencyTransformer {
+
++ SuperDependencyTransformer(java.util.List<csse374.revengd.app.IFilter>)
++ csse374.revengd.app.Database transform(csse374.revengd.app.Database)
+
+}
+
+class csse374.revengd.app.PlantUmlMaker {
+- java.lang.String dir
+- {static} java.lang.String codeString
+- {static} java.lang.String sdCode
+- {static} org.apache.logging.log4j.Logger logger
+
++ void <init>(java.lang.String, boolean)
++ void <init>(boolean)
++ void run()
+{static} void <clinit>()
+
+}
+
+class csse374.revengd.app.PublicFilter {
+
++ void <init>()
++ boolean shouldProcessClass(soot.SootClass)
++ boolean shouldProcessField(soot.SootField)
++ boolean shouldProcessMethod(soot.SootMethod)
+
+}
+
+class csse374.revengd.app.AssociationTransformer {
+java.util.List<csse374.revengd.app.IFilter> filters
+
++ AssociationTransformer(java.util.List<csse374.revengd.app.IFilter>)
++ csse374.revengd.app.Database transform(csse374.revengd.app.Database)
+- boolean shouldProcess(soot.SootField)
+- void findDependency(csse374.revengd.app.Database, soot.SootClass, java.lang.String, boolean)
+
+}
+
+class csse374.revengd.app.DependencyTransformer {
+java.util.List<csse374.revengd.app.IFilter> filters
+
++ DependencyTransformer(java.util.List<csse374.revengd.app.IFilter>)
++ csse374.revengd.app.Database transform(csse374.revengd.app.Database)
+- boolean shouldProcess(soot.SootMethod)
+- void findDependency(csse374.revengd.app.Database, soot.SootClass, java.lang.String, boolean)
+- void lambda$transform$0(csse374.revengd.app.Database, soot.SootClass, soot.Unit)
+
+}
+
+csse374.revengd.app.RecursiveTransformer --|> csse374.revengd.app.Transformer
+csse374.revengd.app.PrivacyTransformer --|> csse374.revengd.app.Transformer
+csse374.revengd.app.UMLRenderingTransformer --|> csse374.revengd.app.Transformer
+csse374.revengd.app.ProtectedFilter ..|> csse374.revengd.app.IFilter
+csse374.revengd.app.PrivateFilter ..|> csse374.revengd.app.IFilter
+csse374.revengd.app.SDRenderingTransformer --|> csse374.revengd.app.Transformer
+csse374.revengd.app.SuperDependencyTransformer --|> csse374.revengd.app.Transformer
+csse374.revengd.app.PublicFilter ..|> csse374.revengd.app.IFilter
+csse374.revengd.app.AssociationTransformer --|> csse374.revengd.app.Transformer
+csse374.revengd.app.DependencyTransformer --|> csse374.revengd.app.Transformer
+csse374.revengd.app.Transformer -->"1..*" csse374.revengd.app.IFilter
+csse374.revengd.app.RecursiveTransformer -->"1..*" csse374.revengd.app.IFilter
+csse374.revengd.app.PrivacyTransformer -->"1..*" csse374.revengd.app.IFilter
+csse374.revengd.app.Preprocessor -->"1..*" csse374.revengd.app.IFilter
+csse374.revengd.app.Preprocessor --> csse374.revengd.app.Database
+csse374.revengd.app.Dependency$RELATIONSHIP -->"1..*" csse374.revengd.app.Dependency$RELATIONSHIP
+csse374.revengd.app.UMLRenderingTransformer -->"1..*" csse374.revengd.app.IFilter
+csse374.revengd.app.UMLRenderingTransformer -->"1..*" csse374.revengd.app.Dependency$RELATIONSHIP
+csse374.revengd.app.Dependency --> csse374.revengd.app.Dependency$RELATIONSHIP
+csse374.revengd.app.Database -->"1..*" csse374.revengd.app.Dependency
+csse374.revengd.app.AssociationTransformer -->"1..*" csse374.revengd.app.IFilter
+csse374.revengd.app.DependencyTransformer -->"1..*" csse374.revengd.app.IFilter
+csse374.revengd.app.Application ..> csse374.revengd.app.Preprocessor
+csse374.revengd.app.Application ..> csse374.revengd.app.PlantUmlMaker
+csse374.revengd.app.Transformer ..> csse374.revengd.app.Database
+csse374.revengd.app.RecursiveTransformer ..> csse374.revengd.app.Database
+csse374.revengd.app.PrivacyTransformer ..> csse374.revengd.app.Database
+csse374.revengd.app.Preprocessor ..> csse374.revengd.app.PrivateFilter
+csse374.revengd.app.Preprocessor ..> csse374.revengd.app.PublicFilter
+csse374.revengd.app.Preprocessor ..> csse374.revengd.app.ProtectedFilter
+csse374.revengd.app.Preprocessor ..>"1..*" csse374.revengd.app.Transformer
+csse374.revengd.app.Preprocessor ..> csse374.revengd.app.RecursiveTransformer
+csse374.revengd.app.Preprocessor ..> csse374.revengd.app.PrivacyTransformer
+csse374.revengd.app.Preprocessor ..> csse374.revengd.app.SuperDependencyTransformer
+csse374.revengd.app.Preprocessor ..> csse374.revengd.app.AssociationTransformer
+csse374.revengd.app.Preprocessor ..> csse374.revengd.app.DependencyTransformer
+csse374.revengd.app.Preprocessor ..> csse374.revengd.app.UMLRenderingTransformer
+csse374.revengd.app.Preprocessor ..> csse374.revengd.app.SDRenderingTransformer
+csse374.revengd.app.Preprocessor ..>"1..*" csse374.revengd.app.Transformer
+csse374.revengd.app.UMLRenderingTransformer ..> csse374.revengd.app.Database
+csse374.revengd.app.UMLRenderingTransformer ..> csse374.revengd.app.Dependency
+csse374.revengd.app.Database ..> csse374.revengd.app.Dependency$RELATIONSHIP
+csse374.revengd.app.SDRenderingTransformer ..>"1..*" csse374.revengd.app.IFilter
+csse374.revengd.app.SDRenderingTransformer ..> csse374.revengd.app.Database
+csse374.revengd.app.SuperDependencyTransformer ..>"1..*" csse374.revengd.app.IFilter
+csse374.revengd.app.SuperDependencyTransformer ..> csse374.revengd.app.Dependency$RELATIONSHIP
+csse374.revengd.app.SuperDependencyTransformer ..> csse374.revengd.app.Database
+csse374.revengd.app.AssociationTransformer ..> csse374.revengd.app.Database
+csse374.revengd.app.DependencyTransformer ..> csse374.revengd.app.Database
+@enduml

@@ -1,0 +1,17 @@
+java.lang.String Test:
+	 args "-dir", 'C:/EclipseWorkspaces/csse374Project/RevEngD', '-entry', 'csse374.revengd.app.Application',
+	 '-class', 'java.lang.String', '-r', '-p', 'private', '-save', 'C:/EclipseWorkspaces/csse374Project/RevEngD/diagrams/dia1.svg'
+	 
+Lab1 Test:
+	args "-dir", 'C:/Users/hazelrja/Desktop/CSSE374 Labs/LabOne', '-entry', 'problem.DataStandardizerApp',
+	 '-class', 'problem.GoogleLineParser,problem.AmazonLineParser,problem.DataStandardizer,problem.MicrosoftLineParser,problem.GrouponLineParser,problem.DataStandardizerApp,problem.ILineParser',
+	 '-r', '-p', 'private', '-save', 'C:/EclipseWorkspaces/csse374Project/RevEngD/diagrams/dia2.svg'
+	 
+JComponent Test:
+	args "-dir", 'C:/Users/hazelrja/Desktop/CSSE374 Labs/LabOne', '-entry', 'problem.DataStandardizerApp',
+     '-class', 'javax.swing.JComponent', '-r', '-p', 'public', '-save', 'C:/EclipseWorkspaces/csse374Project/RevEngD/diagrams/dia3.svg'
+	 
+Whole Project Test:
+	args "-dir", 'C:/EclipseWorkspaces/csse374Project/RevEngD', '-entry', 'csse374.revengd.app.Application',
+	 '-class', 'csse374.revengd.app.Transformer,csse374.revengd.app.RecursiveTransformer,csse374.revengd.app.PrivacyTransformer,csse374.revengd.app.Preprocessor,csse374.revengd.app.Dependency$RELATIONSHIP,csse374.revengd.app.RenderingTransformer,csse374.revengd.app.IFilter,csse374.revengd.app.ProtectedFilter,csse374.revengd.app.PrivateFilter,csse374.revengd.app.Dependency,csse374.revengd.app.Database,csse374.revengd.app.DependencyTransformer,csse374.revengd.app.PlantUmlMaker,csse374.revengd.app.PublicFilter',
+	 '-r', '-p', 'public', '-save', 'C:/EclipseWorkspaces/csse374Project/RevEngD/diagrams/dia4.svg'
