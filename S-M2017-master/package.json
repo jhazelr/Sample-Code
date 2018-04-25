@@ -1,0 +1,31 @@
+{
+  "name": "sharks_and_minows",
+  "version": "1.0.0",
+  "description": "Basic sharks and minows game",
+  "main": "server.js",
+  "directories": {
+    "example": "examples"
+  },
+  "dependencies": {
+    "express": "^4.15.2",
+    "http": "0.0.0",
+    "node-uuid": "^1.4.8",
+    "phaser": "^2.6.2",
+    "socket.io": "^1.7.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/QuantumMenace/S-M2017.git"
+  },
+  "author": "Team S&M",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/QuantumMenace/S-M2017/issues"
+  },
+  "homepage": "https://github.com/QuantumMenace/S-M2017#readme"
+}
